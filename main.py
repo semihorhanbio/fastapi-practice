@@ -1,3 +1,4 @@
+from typing import Optional
 from fastapi import FastAPI
 from enum import Enum
 import uvicorn
@@ -11,8 +12,17 @@ def index():
 
 
 @app.get("/blog/all")
-def get_all_blogs():
-    return {"data": "all blogs"}
+def get_all_blogs(page=1, page_size: Optional[int] = None):
+    return {"message": f"All {page_size} blogs on page {page}"}
+
+
+@app.get("/blog/{id}/comments/{comment_id}")
+def get_comment(
+    id: int, comment_id: int, valid: bool = True, username: Optional[str] = None
+):
+    return {
+        "message": f"Blog with id {id} and comment id {comment_id} and valid {valid} and username {username}"
+    }
 
 
 class BlogType(str, Enum):
