@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from enum import Enum
 import uvicorn
 
 app = FastAPI()
@@ -12,6 +13,17 @@ def index():
 @app.get("/blog/all")
 def get_all_blogs():
     return {"data": "all blogs"}
+
+
+class BlogType(str, Enum):
+    short = "short"
+    story = "story"
+    howto = "howto"
+
+
+@app.get("/blog/type/{type}")
+def get_blog_type(type: BlogType):
+    return {"data": f"Blog type {type.name}"}
 
 
 @app.get("/blog/{id}")
