@@ -16,12 +16,17 @@ def index():
     tags=["blog"],
     summary="Retrieve all blogs",
     description="This api call simulates fetching all blogs",
+    response_description="The list of all blogs",
 )
 def get_all_blogs(page=1, page_size: Optional[int] = None):
     return {"message": f"All {page_size} blogs on page {page}"}
 
 
-@app.get("/blog/{id}/comments/{comment_id}", tags=["blog", "comment"])
+@app.get(
+    "/blog/{id}/comments/{comment_id}",
+    tags=["blog", "comment"],
+    response_description="The list of comment based on blog id",
+)
 def get_comment(
     id: int, comment_id: int, valid: bool = True, username: Optional[str] = None
 ):
@@ -43,7 +48,11 @@ class BlogType(str, Enum):
     howto = "howto"
 
 
-@app.get("/blog/type/{type}", tags=["blog"])
+@app.get(
+    "/blog/type/{type}",
+    tags=["blog"],
+    response_description="The list of blog based on type",
+)
 def get_blog_type(type: BlogType):
     """
     Simulates retrieving a blog type
@@ -52,7 +61,9 @@ def get_blog_type(type: BlogType):
     return {"data": f"Blog type {type.name}"}
 
 
-@app.get("/blog/{id}", tags=["blog"])
+@app.get(
+    "/blog/{id}", tags=["blog"], response_description="The list of blog based on id"
+)
 def get_blog(id: int, response: Response):
     """
     Simulates retrieving a blog
