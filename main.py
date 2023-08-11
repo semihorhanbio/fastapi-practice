@@ -11,12 +11,12 @@ def index():
     return {"message": "hello semih"}
 
 
-@app.get("/blog/all")
+@app.get("/blog/all", tags=["blog"])
 def get_all_blogs(page=1, page_size: Optional[int] = None):
     return {"message": f"All {page_size} blogs on page {page}"}
 
 
-@app.get("/blog/{id}/comments/{comment_id}")
+@app.get("/blog/{id}/comments/{comment_id}", tags=["blog", "comment"])
 def get_comment(
     id: int, comment_id: int, valid: bool = True, username: Optional[str] = None
 ):
@@ -31,12 +31,12 @@ class BlogType(str, Enum):
     howto = "howto"
 
 
-@app.get("/blog/type/{type}")
+@app.get("/blog/type/{type}", tags=["blog"])
 def get_blog_type(type: BlogType):
     return {"data": f"Blog type {type.name}"}
 
 
-@app.get("/blog/{id}")
+@app.get("/blog/{id}", tags=["blog"])
 def get_blog(id: int, response: Response):
     if id > 5:
         response.status_code = status.HTTP_404_NOT_FOUND
